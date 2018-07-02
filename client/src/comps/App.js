@@ -1,34 +1,34 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import { BrowserRouter, Route } from 'react-router-dom'
 
 import './app.css'
 
+import { getUser } from '../actions'
+
 import Header from './header/header'
+import Log from './auth/log'
 
 class App extends Component {
-  componentDidMount(){
-    alert('finish authentication with saved link, then create db for socket management')
-    const socket = new WebSocket('ws://localhost:7000');
-    socket.addEventListener('open', (e) => {
-			socket.send('sending from client', function(err) {
-				if(err){
-					console.log('Error: ',  err);
-				}
-				console.log('Send message');
-			});
-		});
-
-		socket.addEventListener('message', (newMsg) => {
-			console.log(newMsg);
-		});
+  componentWillMount(){
+    this.props.action.getUser()
   }
   render() {
     return (
       <BrowserRouter>
-        <Route path='/' component={Header} />
+          <Route path='/' component={Header}>
+            <Route path='/login' />
+            <Route path='/register' />
+          </Route>
       </BrowserRouter>
     );
   }
 }
-
-export default App;
+const mapStateToProps = ({ auth }) => {
+  return { auth }
+}
+const mapDispatchToProps = (dispatch) => {
+  return { action: bindActionCreators({ getUser }, dispatch), dispatch };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

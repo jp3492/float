@@ -1,0 +1,20 @@
+#log {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid grey;
+}
+input {
+  width: 100%;
+  padding: 0;
+  border: 1px solid grey;
+  height: 50px;
+  position: relative;
+  flex: 1;
+}
+#submit {
+  position: relative;
+  height: 50px;
+  bottom: 0;
+  width: 100%;
+}
